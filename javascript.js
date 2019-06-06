@@ -23,4 +23,5 @@ fetch(`_data/result_${today}.json`)
       newDiv.appendChild(newUl);
       node.appendChild(newDiv);
     }
-  });
+  })
+  .catch(err => node.textContent = err);
