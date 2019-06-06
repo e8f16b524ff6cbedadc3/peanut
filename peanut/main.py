@@ -59,7 +59,7 @@ def main(url: str = ''):
     for it in lst:
         _, loc = helper_title(it.text)
         seen[loc] = list(crawler.parse_details(it.attrs['href']))
-    result_filename = '_data/result_{}.json'.format(datetime.datetime.today().date())
+    result_filename = 'docs/_data/result_{}.json'.format(datetime.datetime.today().date())
     with open(result_filename, 'w') as fd:
         json.dump(seen, fd, ensure_ascii=False)
     LOG.info(f'[+] write to {result_filename}')
