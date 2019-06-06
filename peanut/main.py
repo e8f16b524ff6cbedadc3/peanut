@@ -55,14 +55,17 @@ def main(url: str = ''):
     crawler = Crawler()
     lst = crawler.parse()
     seen = {}
+    today = datetime.datetime.today().date()
     date, _ = helper_title(lst[0].text)
     for it in lst:
         _, loc = helper_title(it.text)
         seen[loc] = list(crawler.parse_details(it.attrs['href']))
-    result_filename = 'docs/_data/result_{}.json'.format(datetime.datetime.today().date())
+    result_filename = 'docs/_data/result_{}.json'.format(today)
     with open(result_filename, 'w') as fd:
         json.dump(seen, fd, ensure_ascii=False)
     LOG.info(f'[+] write to {result_filename}')
+    with open('docs/.last-update', 'w') as fd:
+        fd.write(str(today))
 
 
 if __name__ == '__main__':
