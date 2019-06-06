@@ -1,13 +1,19 @@
 const node = document.querySelector("#container"); 
 const today = new Date().toISOString().split('T')[0];
 
-const lastUpdate;
+let lastUpdate = today;
 fetch ('.last-update')
 .then(resp => resp.text())
 .then(resp => lastUpdate = resp.trim());
 
 fetch(`_data/result_${lastUpdate}.json`)
-  .then(resp => resp.json())
+  .then(resp => {
+    if (resp.status !== 200) {
+      throw new Error("Not 200 response");
+    } else {
+      return resp.json();
+    }
+  })
   .then(resp => {
     const update_info = document.createElement('p');
     update_info.textContent = `本页面更新于：${lastUpdate}`;
